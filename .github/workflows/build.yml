@@ -17,19 +17,17 @@ jobs:
     steps:
       - run: echo "Job triggered because input was true"
     if: (
-      (!(contains(github.ref_name ,'master')) && 
-      !(contains(github.ref_name ,'main')) && 
-      github.event_name == 'workflow_dispatch' &&
-      (inputs.cip-claims-sftp-listener-inbound == true)) 
+        ((!(contains(github.ref_name ,'master')) && 
+        !(contains(github.ref_name ,'main')) && 
+        github.event_name == 'workflow_dispatch' ) &&
+        (inputs.cip-claims-sftp-listener-inbound == true))
       ||
-
-      (!(contains(github.ref_name ,'master')) && 
-      !(contains(github.ref_name ,'main')) && 
-      github.event_name == 'repository_dispatch' && 
-      (${{ github.event.client_payload.cip-claims-sftp-listener-inbound == true }})) 
+        ((!(contains(github.ref_name ,'master')) && 
+        !(contains(github.ref_name ,'main')) && 
+        github.event_name == 'repository_dispatch' ) && 
+        (inputs.cip-claims-sftp-listener-inbound == true))
       ||
-
-      (github.event_name != 'workflow_dispatch' && 
-      (contains(github.ref_name ,'master') || 
-      contains(github.ref_name ,'main')))
+        (github.event_name != 'workflow_dispatch' && 
+        (contains(github.ref_name ,'master') || 
+        contains(github.ref_name ,'main')))
       )
