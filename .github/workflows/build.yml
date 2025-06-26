@@ -1,0 +1,23 @@
+name: Build and Deploy
+on:
+  workflow_dispatch:
+    inputs:
+      cip-claims-sftp-listener-inbound:
+        description: 'Deploy cip-claims-sftp-listener-inbound'
+        type: boolean
+  push:
+    branches:
+      - '*'
+
+jobs:
+  deploy-cip-claims-sftp-listener-inbound:
+    runs-on: ubuntu-latest
+    name: Deploy cip-claims-sftp-listener-inbound to CloudHub
+    permissions: write-all
+    steps:
+      - run: echo "Job triggered because input was true"
+    if: (inputs.cip-claims-sftp-listener-inbound == true) && ((!(contains(github.ref_name ,'master')) && !(contains(github.ref_name ,'main'))
+           && github.event_name == 'workflow_dispatch') || (!(contains(github.ref_name ,'master')) && !(contains(github.ref_name ,'main'))
+           && github.event_name == 'repository_dispatch') ||
+       (github.event_name != 'workflow_dispatch' && (contains(github.ref_name ,'master') 
+                                                || contains(github.ref_name ,'main'))))
